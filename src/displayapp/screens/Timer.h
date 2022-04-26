@@ -34,14 +34,17 @@ namespace Pinetime::Applications::Screens {
     lv_obj_t* btnMinutesDown;
     lv_obj_t* btnSecondsUp;
     lv_obj_t* btnSecondsDown;
+    lv_obj_t* btnReset;
     lv_obj_t* bgMinutesUp;
     lv_obj_t* bgMinutesDown;
     lv_obj_t* bgSecondsUp;
     lv_obj_t* bgSecondsDown;
+    lv_obj_t* bgReset;
     lv_obj_t* txtMUp;
     lv_obj_t* txtMDown;
     lv_obj_t* txtSUp;
     lv_obj_t* txtSDown;
+    lv_obj_t* txtReset;
     lv_task_t* taskRefresh;
   };
 }

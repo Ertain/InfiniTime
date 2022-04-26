@@ -42,6 +42,19 @@ void Timer::CreateButtons() {
   lv_obj_set_style_local_radius(btnSecondsDown, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 0);
   txtSDown = lv_label_create(btnSecondsDown, nullptr);
   lv_label_set_text_static(txtSDown, "-");
+  
+  // Reset button
+  btnReset = lv_btn_create(lv_scr_act(), bgReset);
+  btnReset->user_data = this;
+  lv_obj_set_event_cb(btnReset, btnEventHandler);
+  lv_obj_set_style_local_bg_opa(btnReset, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_OPA_0);
+  lv_obj_set_style_local_radius(btnReset, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 0);
+  // lv_obj_align(btnReset, lv_scr_act(), LV_ALIGN_IN_BOTTOM_LEFT, 5, -10);
+  // lv_obj_set_height(btnReset, 40);
+  // lv_obj_set_width(btnReset, 50);
+  txtReset = lv_label_create(btnReset, nullptr);
+  //lv_label_set_text(txtReset, Symbols::reset);
+  lv_label_set_text_static(txtReset, "0");
 }
 
 Timer::Timer(DisplayApp* app, Controllers::TimerController& timerController)
@@ -88,6 +101,13 @@ Timer::Timer(DisplayApp* app, Controllers::TimerController& timerController)
   lv_obj_set_style_local_radius(bgSecondsDown, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 0);
   lv_obj_set_parent(bgSecondsDown, backgroundLabel);
   lv_obj_set_size(bgSecondsDown, 100, 90);
+  
+  // Reset button
+  bgReset = lv_btn_create(lv_scr_act(), nullptr);
+  lv_obj_align(bgReset, lv_scr_act(), LV_ALIGN_IN_BOTTOM_LEFT, 10, -10);
+  lv_obj_set_style_local_bg_color(bgReset, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_SILVER);
+  lv_obj_set_parent(bgReset, backgroundLabel);
+  lv_obj_set_size(bgReset, 70, 50);
 
   time = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_font(time, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, &jetbrains_mono_76);
@@ -105,12 +125,16 @@ Timer::Timer(DisplayApp* app, Controllers::TimerController& timerController)
   lv_obj_align(time, lv_scr_act(), LV_ALIGN_CENTER, -1, -20);
   lv_obj_align(colon, lv_scr_act(), LV_ALIGN_CENTER, 0, -25);
 
+  // Play/Pause button
   btnPlayPause = lv_btn_create(lv_scr_act(), nullptr);
   btnPlayPause->user_data = this;
   lv_obj_set_event_cb(btnPlayPause, btnEventHandler);
-  lv_obj_align(btnPlayPause, lv_scr_act(), LV_ALIGN_IN_BOTTOM_MID, 0, 0);
+  // TODO Put this back the way it was when you submit this or push it upstream.
+  // lv_obj_align(btnPlayPause, lv_scr_act(), LV_ALIGN_IN_BOTTOM_MID, 10, 0);
+  lv_obj_align(btnPlayPause, lv_scr_act(), LV_ALIGN_IN_BOTTOM_MID, 20, -10);
   lv_obj_set_style_local_bg_color(btnPlayPause, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_SILVER);
-  lv_obj_set_size(btnPlayPause, 120, 50);
+  // lv_obj_set_size(btnPlayPause, 120, 50);
+  lv_obj_set_size(btnPlayPause, 140, 50);
   txtPlayPause = lv_label_create(btnPlayPause, nullptr);
   if (timerController.IsRunning()) {
     lv_label_set_text_static(txtPlayPause, Symbols::pause);
@@ -161,7 +185,25 @@ void Timer::OnButtonEvent(lv_obj_t* obj, lv_event_t event) {
         btnMinutesUp = nullptr;
         
       }
-    } else {
+    } else if (obj == btnReset) {
+      if (timerController.IsRunning()) {
+        timerController.StopTimer();
+        // TODO Add the `Reset()` function to the `TimerController` class.
+        // timerController.Reset();
+        lv_label_set_text(time, "00:00");
+        lv_label_set_text(txtPlayPause, Symbols::play);
+        secondsToSet = 0;
+        minutesToSet = 0;
+        CreateButtons();
+      } else {
+        timerController.StopTimer();
+        // timerController.Reset();
+        lv_label_set_text(time, "00:00");
+        lv_label_set_text(txtPlayPause, Symbols::play);
+        secondsToSet = 0;
+        minutesToSet = 0;
+        }
+      } else {
       if (!timerController.IsRunning()) {
         if (obj == btnMinutesUp) {
           if (minutesToSet >= 59) {
