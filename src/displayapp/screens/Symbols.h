@@ -56,7 +56,8 @@ namespace Pinetime {
         static constexpr const char* notificationsOn = "\xEE\xA4\x8C";  // e90c
 
         static constexpr const char* highlight = "\xEE\xA4\x87"; // e907
-
+        
+        static constexpr const char* reset = "\xEF\x80\xA1";
       }
     }
   }

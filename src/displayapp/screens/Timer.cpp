@@ -49,12 +49,10 @@ void Timer::CreateButtons() {
   lv_obj_set_event_cb(btnReset, btnEventHandler);
   lv_obj_set_style_local_bg_opa(btnReset, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_OPA_0);
   lv_obj_set_style_local_radius(btnReset, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 0);
-  // lv_obj_align(btnReset, lv_scr_act(), LV_ALIGN_IN_BOTTOM_LEFT, 5, -10);
-  // lv_obj_set_height(btnReset, 40);
-  // lv_obj_set_width(btnReset, 50);
   txtReset = lv_label_create(btnReset, nullptr);
-  //lv_label_set_text(txtReset, Symbols::reset);
-  lv_label_set_text_static(txtReset, "0");
+  lv_label_set_text(txtReset, Symbols::reset);
+  lv_obj_set_style_local_text_color(txtReset, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_BLACK);
+  // lv_label_set_text_static(txtReset, "0");
 }
 
 Timer::Timer(DisplayApp* app, Controllers::TimerController& timerController)
