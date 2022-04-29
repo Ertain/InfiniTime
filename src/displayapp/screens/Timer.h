@@ -39,7 +39,7 @@ namespace Pinetime::Applications::Screens {
     lv_obj_t* bgMinutesDown;
     lv_obj_t* bgSecondsUp;
     lv_obj_t* bgSecondsDown;
-    lv_obj_t* bgReset;
+    //lv_obj_t* bgReset;
     lv_obj_t* txtMUp;
     lv_obj_t* txtMDown;
     lv_obj_t* txtSUp;
